@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <script src="{{ url_for('static', path='js/jquery-3.6.0.min.js') }}" defer></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script src="js/bootstrap.min.js" defer></script>
-    <script src="js/main.js" defer></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <script src="{{ url_for('static', path='js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ url_for('static', path='js/main.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap-theme.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
 
     <title>OVision</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
     <div class="container-fluid">
-        <a href="#" class="navbar-brad"><img src="img/ovision-logo.png"></a>
+        <a href="#" class="navbar-brad"><img src="{{ url_for('static', path='img/ovision-logo.png') }}"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarResponsive">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -54,7 +54,7 @@
                 данных.</p>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-xl-4">
-            <img src="img/face-vector-img.png" class="imgFromIndex">
+            <img src="{{ url_for('static', path='img/face-vector-img.png') }}" class="imgFromIndex">
         </div>
     </div>
     <div class="row jumbotron">
@@ -62,7 +62,7 @@
             <p class="text">Все наши устройства могут работать локально, не подключаясь при этом к интернету.</p>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-xl-4">
-            <img src="img/faceLockHomeX.png" class="imgFromIndex">
+            <img src="{{ url_for('static', path='img/faceLockHomeX.png') }}" class="imgFromIndex">
         </div>
     </div>
 </div>
