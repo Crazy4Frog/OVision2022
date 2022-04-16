@@ -21,9 +21,13 @@ body, html {
 }
 .viewport{
     margin: 40px auto;
-    height: 50vh;
+    width: max-content;
+    height: max-content;
     background: #343a40;
     border-radius: 40px;
+    display: flex;
+    overflow: hidden;
+    justify-content: center
 }
 .imgFromIndex{
     margin: 20px auto;

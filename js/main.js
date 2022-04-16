@@ -1,19 +1,10 @@
-if(navigator.webkitGetUserMedia!=null) {
-    var options = {
-        video:true,
-        audio:true
-    };
-
-    // запрашиваем доступ к веб-камере
-    navigator.webkitGetUserMedia(options,
-        function(stream) {
-            // получаем тег video
-            var video = document.querySelector('video');
-            // включаем поток в магический URL
-            video.src = window.webkitURL.createObjectURL(stream);
-        },
-        function(e) {
-            console.log("error happened");
-        }
-    );
+let video = document.querySelector('video');
+if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({video: true}).then(function (stream) {
+        video.srcObject = stream;
+    }).catch(function (error) {
+        console.log("Something went wrong!");
+    })
+} else {
+    console.log("getUserMedia not supported!")
 }
