@@ -1,11 +1,11 @@
-let container = document.querySelector('div#interactive')
-let canvas = document.querySelector('canvas#onVideoCanvas');
-let invisibleCanvas = document.querySelector('canvas#invisible')
-let video = document.querySelector('video');
+let container = document.getElementById('interactive')
+let canvas = document.getElementById('onVideoCanvas');
+let invisibleCanvas = document.getElementById('invisible')[0];
+let video = document.getElementById('videoElement');
 let ctx = canvas.getContext('2d');
-let invisibleContext = invisibleCanvas.getContext('2d')
-let isCanvasResized = false
-new ResizeSensor(container, Program)
+let invisibleContext = invisibleCanvas.getContext('2d');
+let isCanvasResized = false;
+// Надо повесить какой-то эвент на изменение размеров канваса по размеру контейнера. Пока по умолчанию у канвасов размер прописан
 if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({video: true}).then(function (stream) {
         video.srcObject = stream;
@@ -13,7 +13,7 @@ if (navigator.mediaDevices.getUserMedia) {
         console.log("Something went wrong!");
     })
 } else {
-    console.log("getUserMedia not supported!")
+    console.log("getUserMedia not supported!");
 }
 
 video.addEventListener('play', function () {
@@ -45,6 +45,10 @@ function drawRectangle(point1, point3, color){
     ctx.stroke();
 }
 function Program(){
-    resizeCanvas();
     // drawRectangle({x: 50, y: 30}, {x: 400, y: 200}, 'red')
+}
+async function sendRequest(){
+    invisibleContext.drawImage(video[0], 0, 0, invisibleCanvas.width, invisibleCanvas.height);
+    let dataURI = invisibleCanvas.toDataURL('image/png');
+    console.log(dataURI);
 }
