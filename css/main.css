@@ -32,6 +32,10 @@ body, html {
 #onVideoCanvas{
     position: absolute;
 }
+#invisible{
+    position: absolute;
+    display: none;
+}
 .imgFromIndex{
     margin: 20px auto;
     width: 100%;
