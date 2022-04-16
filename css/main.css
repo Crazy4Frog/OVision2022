@@ -27,13 +27,17 @@ body, html {
     border-radius: 40px;
     display: flex;
     overflow: hidden;
-    justify-content: center
+    justify-content: center;
+}
+#onVideoCanvas{
+    position: absolute;
 }
 .imgFromIndex{
     margin: 20px auto;
     width: 100%;
 }
 .features{
+    display: block;
     margin: 10px auto;
     align-items: center;
 }
