@@ -13,7 +13,7 @@ if (navigator.mediaDevices.getUserMedia) {
         console.log("Something went wrong!");
     })
 } else {
-    console.log("getUserMedia not supported!");
+    console.log("getUserMedia not supported!")
 }
 
 video.addEventListener('play', function () {
