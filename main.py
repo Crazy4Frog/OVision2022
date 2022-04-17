@@ -8,6 +8,9 @@ from PIL import Image
 from fastapi import FastAPI, Request, Form, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from models import processImage
+
+counter = 0  # counts post requests
 
 app = FastAPI()
 
@@ -28,17 +31,14 @@ async def index(request: Request):
 
 
 @app.post('/take_image')
-def take_image(photo):
-    print(photo)
-    return Response(
-        json.dumps({
-            'success': True,
-            'photo': photo
-        }),
-        media_type='application/json'
-    )
+async def take_image(photo):
+    print(len(photo))
+    counter += 1;
+    response_json = processImage(photo, counter)
+    return Response(response_json, media_type='application/json')
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=os.environ.get("APP_HOST", "127.0.0.1"), port=int(os.environ.get("APP_PORT", "8000")),
+    uvicorn.run("main:app", host=os.environ.get("APP_HOST", "127.0.0.1"),
+                port=int(os.environ.get("APP_PORT", "8000")),
                 reload=True, log_level="info")
