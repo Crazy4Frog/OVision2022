@@ -1,54 +1,61 @@
-let container = document.getElementById('interactive')
-let canvas = document.getElementById('onVideoCanvas');
-let invisibleCanvas = document.getElementById('invisible')[0];
-let video = document.getElementById('videoElement');
-let ctx = canvas.getContext('2d');
-let invisibleContext = invisibleCanvas.getContext('2d');
-let isCanvasResized = false;
-// Надо повесить какой-то эвент на изменение размеров канваса по размеру контейнера. Пока по умолчанию у канвасов размер прописан
-if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({video: true}).then(function (stream) {
-        video.srcObject = stream;
-    }).catch(function (error) {
-        console.log("Something went wrong!");
-    })
-} else {
-    console.log("getUserMedia not supported!")
-}
+(function() {
+    var width = 320;
+    var height = 0;
 
-video.addEventListener('play', function () {
-    let $this = this; //cache
-    (function loop() {
-        if (!$this.paused && !$this.ended) {
-            invisibleContext.drawImage($this, 0, 0);
-            setTimeout(loop, 1000 / 60); // drawing at 30fps
-        }
-    })();
-}, false);
+    var streaming = false;
+
+    var video = null;
+    var canvas = null;
+    var startbutton = null;
 
 
-function resizeCanvas() {
-    invisibleCanvas.width = container.offsetWidth;
-    invisibleCanvas.height = container.offsetHeight;
-    canvas.width = container.offsetWidth;
-    canvas.height = container.offsetHeight;
-    isCanvasResized = true;
-}
-function drawRectangle(point1, point3, color){
-    ctx.beginPath()
-    ctx.strokeStyle = color;
-    ctx.moveTo(point1.x, point1.y);
-    ctx.lineTo(point3.x, point1.y);
-    ctx.lineTo(point3.x, point3.y);
-    ctx.lineTo(point1.x, point3.y);
-    ctx.lineTo(point1.x, point1.y);
-    ctx.stroke();
-}
-function Program(){
-    // drawRectangle({x: 50, y: 30}, {x: 400, y: 200}, 'red')
-}
-async function sendRequest(){
-    invisibleContext.drawImage(video[0], 0, 0, invisibleCanvas.width, invisibleCanvas.height);
-    let dataURI = invisibleCanvas.toDataURL('image/png');
-    console.log(dataURI);
-}
+    function startup() {
+        video = document.getElementById('video');
+        canvas = document.getElementById('canvas');
+        startbutton = document.getElementById('startbutton');
+    
+        navigator.mediaDevices.getUserMedia({video: true, audio: false})
+        .then(function(stream) {
+          video.srcObject = stream;
+          video.play();
+        })
+        .catch(function(err) {
+          console.log("An error occurred: " + err);
+        });
+    
+        video.addEventListener('canplay', function(ev){
+          if (!streaming) {
+            height = video.videoHeight / (video.videoWidth/width);
+          
+            if (isNaN(height)) {
+              height = width / (4/3);
+            }
+          
+            video.setAttribute('width', width);
+            video.setAttribute('height', height);
+            canvas.setAttribute('width', width);
+            canvas.setAttribute('height', height);
+            streaming = true;
+          }
+        }, false);
+    
+        startbutton.addEventListener('click', async function(ev){
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, width, height);
+
+            var data = canvas.toDataURL('image/png');
+
+            let response = await fetch('/take_image', {
+                method: "POST",
+                body: data
+            });
+            
+            let response_json = await response.json()
+            console.log(response_json)
+
+            ev.preventDefault();
+        }, false);
+      }
+
+    window.addEventListener('load', startup);
+})();

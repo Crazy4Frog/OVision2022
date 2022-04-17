@@ -81,12 +81,12 @@
     // captured.
   
     function clearphoto() {
-      var context = canvas.getContext('2d');
-      context.fillStyle = "#AAA";
-      context.fillRect(0, 0, canvas.width, canvas.height);
-  
-      var data = canvas.toDataURL('image/png');
-      photo.setAttribute('src', data);
+        var context = canvas.getContext('2d');
+        context.fillStyle = "#AAA";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    
+        var data = canvas.toDataURL('image/png');
+        photo.setAttribute('src', data);
     }
     
     // Capture a photo by fetching the current contents of the video
@@ -95,7 +95,7 @@
     // drawing that to the screen, we can change its size and/or apply
     // other changes before drawing it.
   
-    function takepicture() {
+    async function takepicture() {
       var context = canvas.getContext('2d');
       if (width && height) {
         canvas.width = width;
@@ -103,6 +103,12 @@
         context.drawImage(video, 0, 0, width, height);
       
         var data = canvas.toDataURL('image/png');
+        let response = await fetch('/take_image', {
+            method: "POST",
+            body: new FormData(data)
+        });
+        let response_json = await response.json()
+        console.log(response_json)
         photo.setAttribute('src', data);
       } else {
         clearphoto();
