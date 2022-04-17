@@ -1,0 +1,12 @@
+version: "3.2"
+services:
+  pyapp:
+    build: .
+    environment:
+      - APP_PORT:8000
+      - APP_HOST:"127.0.0.1"
+    expose:
+      - 8080
+    ports:
+#      "docker:host"
+      - "8080:8000"

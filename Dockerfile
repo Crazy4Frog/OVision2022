@@ -4,8 +4,6 @@ COPY . /app
 
 WORKDIR /app
 
-EXPOSE 80
-
 RUN pip3 install -r requirements.txt
 
-CMD ["uvicorn", "main:app", "--reload"]
+CMD ["python3", "main.py"]
