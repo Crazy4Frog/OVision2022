@@ -44,10 +44,16 @@
             context.drawImage(video, 0, 0, width, height);
 
             var data = canvas.toDataURL('image/png');
+        
 
             let response = await fetch('/take_image', {
                 method: "POST",
-                body: data
+                headers: {
+                  'Content-type': 'application/json; charset=UTF-8'
+                },
+                body: JSON.stringify({
+                  data: data
+                })
             });
             
             let response_json = await response.json()

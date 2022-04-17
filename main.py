@@ -5,18 +5,21 @@ import base64
 import io
 import numpy as np
 from PIL import Image
-from fastapi import FastAPI, Request, Form, Response
+from fastapi import FastAPI, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from models import processImage
+from pydantic import BaseModel
 
-counter = 0  # counts post requests
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory='static'), name='static')
 
 templates = Jinja2Templates(directory='templates')
+
+
+class Data(BaseModel):
+    data: str
 
 
 def base_to_cv2(img):
@@ -31,11 +34,14 @@ async def index(request: Request):
 
 
 @app.post('/take_image')
-async def take_image(photo):
-    print(len(photo))
-    counter += 1;
-    response_json = processImage(photo, counter)
-    return Response(response_json, media_type='application/json')
+async def take_image(data: Data):
+    photo_base64 = data.data.split(';')[1].split(',')[1]
+    print(base_to_cv2(photo_base64))
+    return Response(
+        json.dumps({
+            'photo': photo_base64,
+        }), 
+        media_type='application/json')
 
 
 if __name__ == "__main__":
