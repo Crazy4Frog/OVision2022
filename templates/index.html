@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/main.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="contentarea">
+        <div class="camera">
+          <video id="video">Video stream not available.</video>
+          <button id="startButton">Take photo</button>
+        </div>
+        <canvas id="canvas">
+        </canvas>
+    </div>
+    <div class="results">
+      <div class="result">
+        <p>Пол: </p><p id='gender'></p>
+      </div>
+      <div class="result">
+        <p>Возраст: </p><p id='age'></p>
+      </div>
+    </div>
+      
+      <script src="{{ url_for('static', path='js/main.js') }}"></script>
+</body>
+</html>
