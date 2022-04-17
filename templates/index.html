@@ -15,7 +15,16 @@
         </div>
         <canvas id="canvas">
         </canvas>
+    </div>
+    <div class="results">
+      <div class="result">
+        <p>Пол: </p><p id='gender'></p>
       </div>
+      <div class="result">
+        <p>Возраст: </p><p id='age'></p>
+      </div>
+    </div>
+      
       <script src="{{ url_for('static', path='js/main.js') }}"></script>
 </body>
 </html>

@@ -8,7 +8,6 @@
     var canvas = null;
     var startbutton = null;
 
-
     function startup() {
         video = document.getElementById('video');
         canvas = document.getElementById('canvas');
@@ -45,7 +44,6 @@
 
             var data = canvas.toDataURL('image/png');
         
-
             let response = await fetch('/take_image', {
                 method: "POST",
                 headers: {
@@ -57,10 +55,18 @@
             });
             
             let response_json = await response.json()
-            console.log(response_json)
+            age = response_json.photo.age
+            gender = response_json.photo.gender
+            
+            age_el = document.getElementById('age')
+            gender_el = document.getElementById('gender')
+
+            age_el.innerHTML = age
+            gender_el.innerHTML = gender
 
             ev.preventDefault();
         }, false);
+        
       }
 
     window.addEventListener('load', startup);

@@ -55,7 +55,8 @@ h3 {
 .text {
     font-size: 30px;
 }
-/*#startButton{*/
-/*    background-color: green;*/
-/*    color: red;*/
-/*}*/
+
+.result {
+    display: flex;
+    flex-direction: row;
+}

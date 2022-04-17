@@ -9,6 +9,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
+from predictor import make_prediction
 
 
 app = FastAPI()
@@ -36,10 +37,10 @@ async def index(request: Request):
 @app.post('/take_image')
 async def take_image(data: Data):
     photo_base64 = data.data.split(';')[1].split(',')[1]
-    print(base_to_cv2(photo_base64))
+    predictions = make_prediction(base_to_cv2(photo_base64))
     return Response(
         json.dumps({
-            'photo': photo_base64,
+            'photo': predictions,
         }), 
         media_type='application/json')
 
