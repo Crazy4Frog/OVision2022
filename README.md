@@ -3,7 +3,7 @@ Just hackathon task
 
 ##
 First start can be long, because model are downloading. <br>
-When you click on button, frontend send base64 picture to FastApi using AJAX, then model are making a prediction and send JSON results to frontend.
+When you click on button, frontend send base64 picture to FastApi using AJAX, then model are making a prediction and sending JSON results to frontend.
 
 ## How to use?
 1. Create python enviroment
